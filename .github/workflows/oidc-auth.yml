@@ -21,7 +21,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
       - name: Get Credentials from Amazon Cognito Identity
-        uses: Cloud-DevOps-Er/cognito-idpool-auth@v1
+        uses: catnekaise/cognito-idpool-auth@v1
         with:
           cognito-identity-pool-id: "us-east-1:26139378-441f-4bf5-885f-d1af816deb8e"
           aws-region: "us-east-1"
