@@ -18,7 +18,7 @@ jobs:
       id-token: write
     steps:
       - name: Get Credentials from Amazon Cognito Identity
-        uses: catnekaise/cognito-idpool-auth@alpha
+        uses: catnekaise/cognito-idpool-auth@v1
         with:
           cognito-identity-pool-id: "us-east-1:26139378-441f-4bf5-885f-d1af816deb8e"
           aws-region: "us-east-1"
