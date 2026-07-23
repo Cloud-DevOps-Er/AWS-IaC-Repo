@@ -22,6 +22,7 @@ jobs:
         with:
           cognito-identity-pool-id: "us-east-1:26139378-441f-4bf5-885f-d1af816deb8e"
           aws-region: "us-east-1"
+          auth-flow: 'basic'
           audience: "cognito-identity.amazonaws.com"
           aws-account-id: "730355530458"
           set-in-environment: true
