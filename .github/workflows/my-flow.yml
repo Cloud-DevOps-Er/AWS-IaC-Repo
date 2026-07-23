@@ -1,9 +1,11 @@
 on:
-  push: null
-  permissions:
+  push:
+
+    permissions: branches: [main]
     id-token: write
     contents: read
     pull-requests: write
+    
 jobs:
   terraform:
     name: Terraform
