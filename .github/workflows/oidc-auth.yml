@@ -1,22 +1,37 @@
-name: GitHub AWS OIDC
 on:
-  push:
-    branches: [oidc-integration]
-
-permissions:
-  id-token: write
-  contents: read
-    
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: string
+        required: true
+        description: "Environment"
+        default: "dev"
+env:
+  BUCKET_NAME: "backend-files-tf"
 jobs:
-  oidc-test:
-    runs-on: [ubuntu-latest]
+  job1:
+    runs-on: ubuntu-latest
+    # Repository environments can be used in any repository in any GitHub plan,
+    # but only public repos or Enterprise plans support settings protection rules for the environment.
+    environment: ${{ inputs.environment }}
+    permissions:
+      id-token: write
     steps:
-      - name: Checkout Source
-        uses: actions/checkout@v4
-      - name: Configure AWS Credentials using OIDC
-        uses: aws-actions/configure-aws-credentials@v4.1.0
+      - name: Get Credentials from Amazon Cognito Identity
+        uses: catnekaise/cognito-idpool-auth@alpha
         with:
-          aws-region: us-east-1
-          role-to-assume: ${{ secrets.AWS_IAM_ROLE }}
-      - name: Test AWS Credentials
-        run: aws sts get-caller-identity
+          cognito-identity-pool-id: "us-east-1:26139378-441f-4bf5-885f-d1af816deb8e"
+          aws-region: "us-east-1"
+          audience: "cognito-identity.amazonaws.com"
+          aws-account-id: "730355530458"
+          set-in-environment: true
+
+      - name: STS Get Caller Identity
+        run: |
+          aws sts get-caller-identity          
+
+      - name: Upload txt file to S3
+        run: |
+          echo "Hello from GitHub Actions" > info.txt
+          aws s3 cp info.text s3://${{ env.BUCKET_NAME }}/repo/${{ github.repository }}/info.txt
+          aws s3 cp info.text s3://${{ env.BUCKET_NAME }}/env/${{ github.repository }}/${{ inputs.environment }}/info.txt
