@@ -1,5 +1,4 @@
-name: Plan and Apply Terraform
-
+---
 on:
   push:
 
