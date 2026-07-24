@@ -1,11 +1,11 @@
 resource "aws_instance" "web_server" {
-  ami           = var.ami_id
-  instance_type = var.instance_type
-  count         = var.instance_count
+  ami                         = var.ami_id
+  instance_type               = var.instance_type
+  count                       = var.instance_count
   subnet_id                   = aws_subnet.custom_subnet.id
   vpc_security_group_ids      = [aws_security_group.sg.id]
   associate_public_ip_address = var.enable_public_ip
-    tags = {
+  tags = {
     Name = "${var.instance_prefix}-${count.index + 1}"
   }
 }
@@ -26,14 +26,14 @@ resource "aws_subnet" "custom_subnet" {
   tags = {
     Name = "Dev-Subnet"
   }
-} 
+}
 
 resource "aws_route_table" "route_table" {
   vpc_id = aws_vpc.custom_vpc.id
   route {
     cidr_block = "0.0.0.0/0"
   }
-  }
+}
 
 resource "aws_route_table_association" "rta" {
   subnet_id      = aws_subnet.custom_subnet.id

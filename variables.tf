@@ -22,7 +22,7 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
- variable "vpc_cidr" {
+variable "vpc_cidr" {
   description = "The CIDR block for the custom VPC"
   type        = string
   default     = "10.0.0.0/20"
